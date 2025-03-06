@@ -7,13 +7,16 @@ interface TodoItemProps {
   onToggle: (id: number) => void;
 }
 
-export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle }) => {
+export const TodoItem: React.FC<TodoItemProps> = ({
+  todo: { id, title, completed },
+  onToggle,
+}) => {
   const handleCheckboxChange = () => {
-    onToggle(todo.id);
+    onToggle(id);
   };
 
   return (
-    <div data-cy="Todo" className={cn('todo', { completed: todo.completed })}>
+    <div data-cy="Todo" className={cn('todo', { completed: completed })}>
       {/* eslint-disable jsx-a11y/label-has-associated-control */}
 
       <label className="todo__status-label">
@@ -21,12 +24,12 @@ export const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggle }) => {
           data-cy="TodoStatus"
           type="checkbox"
           className="todo__status"
-          checked={todo.completed}
+          checked={completed}
           onChange={handleCheckboxChange}
         />
       </label>
       <span className="todo__title" data-cy="TodoTitle">
-        {todo.title}
+        {title}
       </span>
       <button type="button" className="todo__remove" data-cy="TodoDelete">
         ×

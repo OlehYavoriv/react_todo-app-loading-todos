@@ -20,45 +20,22 @@ export const Footer: React.FC<FooterProps> = ({
       </span>
 
       <nav className="filter" data-cy="Filter">
-        <a
-          href="#/"
-          className={cn('filter__link', { selected: currentFilter === 'all' })}
-          data-cy="FilterLinkAll"
-          onClick={(event: MouseEvent<HTMLAnchorElement>) => {
-            event.preventDefault();
-            setCurrentFilter(Filter.All);
-          }}
-        >
-          All
-        </a>
-
-        <a
-          href="#/active"
-          className={cn('filter__link', {
-            selected: currentFilter === 'active',
-          })}
-          data-cy="FilterLinkActive"
-          onClick={(event: MouseEvent<HTMLAnchorElement>) => {
-            event.preventDefault();
-            setCurrentFilter(Filter.Active);
-          }}
-        >
-          Active
-        </a>
-
-        <a
-          href="#/completed"
-          className={cn('filter__link', {
-            selected: currentFilter === 'completed',
-          })}
-          data-cy="FilterLinkCompleted"
-          onClick={(event: MouseEvent<HTMLAnchorElement>) => {
-            event.preventDefault();
-            setCurrentFilter(Filter.Completed);
-          }}
-        >
-          Completed
-        </a>
+        {Object.values(Filter).map(filter => (
+          <a
+            key={filter}
+            href={`#/${filter.toLowerCase()}`}
+            className={cn('filter__link', {
+              selected: currentFilter === filter,
+            })}
+            data-cy={`FilterLink${filter.charAt(0).toUpperCase() + filter.slice(1)}`}
+            onClick={(event: MouseEvent<HTMLAnchorElement>) => {
+              event.preventDefault();
+              setCurrentFilter(filter);
+            }}
+          >
+            {filter.charAt(0).toUpperCase() + filter.slice(1)}
+          </a>
+        ))}
       </nav>
 
       <button
